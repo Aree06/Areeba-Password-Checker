@@ -1,0 +1,72 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* General body styling */
+body 
+{
+    background: lightgoldenrodyellow; /* color of background */
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: large;
+    padding: 0px;
+    margin: 0px;
+    background-color: lightgoldenrodyellow;
+    padding: 0px;
+    margin: 0px; 
+    text-align: center;
+    color: black;
+}
+
+#wrapper
+{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+h2
+{
+    color: black; /* color of text */
+    text-align: center; /* centers the text */
+    padding: 20px; /* adds space around the text */
+}
+
+p
+{
+    color: black; /* color of text */
+    text-align: center; /* centers the text */
+    padding: 20px; /* adds space around the text */
+}
+
+.password-box {
+  text-align: center;
+  width: 600px;
+  height: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  margin-top: 130px;
+  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Show button */
+#toggleBtn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.input-wrap
+{
+    display: flex; /* enables flexbox layout */
+    justify-content: center; /* centers the content horizontally */
+    margin-top: 20px; /* adds space above the input field */
+}
+
+/* Clearfix to ensure proper layout after floating elements */
+.clear 
+{
+    clear: both; /* clears floats */
+}

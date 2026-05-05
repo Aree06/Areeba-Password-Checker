@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <title>Password Checker</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="fluid.css" media="only screen and (min-width: 960px)">
+  <link rel="stylesheet" type="text/css" href="tablet.css" media="only screen and (min-width:481px) and (max-width: 959px)">
+  <link rel="stylesheet" type="text/css" href="phone.css" media="only screen and (max-width: 480px)">
+</head>
+
+<body>
+  <div id="wrapper">
+    <main>
+            <section>
+
+        <div class="password-box">
+
+            <h2 class="head2">Welcome to The Password Checker</h2>
+            <p>On this website you will be able to check your password for strength and security.</p>
+
+            <div class="input-wrap">
+            <input type="password" id="pw" placeholder="Type a password…" autocomplete="off" spellcheck="false" />
+            <button id="toggleBtn">SHOW</button>
+            </div>
+
+            <div class="bar-track">
+            <div class="bar-fill" id="barFill"></div>
+            </div>
+
+            <p id="strengthLabel"></p>
+            <div id="checksGrid"></div>
+            <div id="statsRow"></div>
+            <p id="emptyMsg">Start typing to analyze your password</p>
+
+        </div>
+
+        </section>
+    </main>
+
+    <footer class="footerhome">
+      <p>&copy; 2026 by Areeba Alam. All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <script>
+    // Grab each element from the page so JS can control them
+    const pwInput = document.getElementById('pw');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const emptyMsg = document.getElementById('emptyMsg');
+    const checksGrid = document.getElementById('checksGrid');
+    const statsRow = document.getElementById('statsRow');
+    const barFill = document.getElementById('barFill');
+    const strengthLabel = document.getElementById('strengthLabel');
+
+    // When the user clicks SHOW/HIDE, switch the input between hidden and visible
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = pwInput.type === 'password';
+      pwInput.type = isHidden ? 'text' : 'password';
+      toggleBtn.textContent = isHidden ? 'HIDE' : 'SHOW';
+    });
+
+    // Every time the user types a character, this runs
+    pwInput.addEventListener('input', () => {
+      const pw = pwInput.value;
+
+      // If the box is empty, reset everything back to blank
+      if (!pw) {
+        emptyMsg.style.display = 'block';
+        checksGrid.innerHTML = '';
+        statsRow.innerHTML = '';
+        barFill.style.width = '0%';
+        strengthLabel.textContent = '';
+        return;
+      }
+
+      // Hide the placeholder message once typing starts
+      emptyMsg.style.display = 'none';
+
+     // Start score at 0
+let score = 0;
+
+// Save all checks here
+let checks = [];
+
+// Check length
+const longEnough = pw.length >= 8;
+
+// Check for uppercase letter
+const hasUpper = /[A-Z]/.test(pw);
+
+// Check for special symbol
+const hasSymbol = /[^A-Za-z0-9]/.test(pw);
+
+// Add points if each rule passes
+if (longEnough) score += 40;
+if (hasUpper) score += 30;
+if (hasSymbol) score += 30;
+
+// Save the checks so they can be shown
+checks.push({ label: 'At least 8 characters', ok: longEnough });
+checks.push({ label: 'Has uppercase letter', ok: hasUpper });
+checks.push({ label: 'Has special symbol', ok: hasSymbol });
+
+// Show the checks on the page
+checksGrid.innerHTML = checks.map(check => `
+  <div class="${check.ok ? 'pass' : 'fail'}">
+    ${check.ok ? '✔' : '✖'} ${check.label}
+  </div>
+`).join('');
+
+// Fill the bar
+barFill.style.width = score + '%';
+
+// Show strength word
+if (score < 40) {
+  strengthLabel.textContent = 'Weak';
+} else if (score < 80) {
+  strengthLabel.textContent = 'Good';
+} else {
+  strengthLabel.textContent = 'Strong';
+}
+
+// Show simple stats
+statsRow.innerHTML = `
+  <div>Length: ${pw.length}</div>
+  <div>Score: ${score}/100</div>`;
+    });
+  </script>
+
+</body>
+</html>
